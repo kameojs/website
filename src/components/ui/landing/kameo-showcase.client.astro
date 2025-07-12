@@ -11,6 +11,8 @@ import { FormKit } from '@kameo/form-kit';
 import { SlashCommand, suggestion } from '@kameo/extension-slash-command';
 import { Placeholder } from '@kameo/extensions';
 
+const documentMode = 'edit';
+
 const initKameo = () => {
   const kameo = new Kameo({
     element: document.querySelector('#kameo'),
@@ -20,7 +22,7 @@ const initKameo = () => {
       SlashCommand.configure({ suggestion }),
       Placeholder.configure({ placeholder: 'Press / for commands...' }),
     ],
-    documentMode: 'edit',
+    documentMode,
   });
   return kameo;
 };
@@ -38,7 +40,7 @@ const createDemoForm = (kameo) => {
     .run();
 };
 
-const attachEventListeners = (kameo) => {
+const handlenKameoEvents = (kameo) => {
   kameo.on('submit', async (event) => {    
     if (!event.valid) {
       event.setSubmitResult({
@@ -67,20 +69,64 @@ const attachEventListeners = (kameo) => {
   });
 };
 
+const handleDocumentMode = (kameo, defaultMode) => {
+  const select = document.querySelector('.km-kameo-demo__document-mode select');
+  if (select) {
+    select.value = defaultMode;
+    select.addEventListener('change', (event) => {
+      kameo.setDocumentMode(event.target.value);
+    });
+  }
+};
+
 const init = () => {
   const kameo = initKameo();
   globalThis.kameo = kameo;
 
   createDemoForm(kameo);
-  attachEventListeners(kameo);
+  handleDocumentMode(kameo, documentMode);
+  handlenKameoEvents(kameo);
 };
 
 init();
 </script>
 
-<div id="kameo" class="km-kameo-container"></div>
+<div class="km-kameo-demo">
+  <div class="km-kameo-demo__actions">
+    <div class="km-kameo-demo__document-mode">
+      <select>
+        <option value="" selected disabled>Document mode</option>
+        <option value="edit">Edit</option>
+        <option value="view">View</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="kameo" class="km-kameo-container"></div>
+</div>
 
 <style is:global>
+  .km-kameo-demo {
+    width: 100%;
+  }
+
+  .km-kameo-demo__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .km-kameo-demo__document-mode select {
+    width: 140px;
+    padding: 6px 10px;
+    border: 1px solid rgb(229 231 235);
+    appearance: base-select;
+    border-radius: 6px;
+    background: none;
+  }
+
   .km-kameo-container {
     width: 100%;
     border: 1px solid rgb(229 231 235);
