@@ -9,44 +9,73 @@ import { FormKit } from '@kameo/form-kit';
 import { SlashCommand, suggestion } from '@kameo/extension-slash-command';
 import { Placeholder } from '@kameo/extensions';
 
-// TODO: add default form.
+const initKameo = () => {
+  const kameo = new Kameo({
+    element: document.querySelector('#kameo'),
+    extensions: [
+      StarterKit,
+      FormKit,
+      SlashCommand.configure({ suggestion }),
+      Placeholder.configure({ placeholder: 'Press / for commands...' }),
+    ],
+    documentMode: 'edit',
+  });
+  return kameo;
+};
 
-const kameo = new Kameo({
-  element: document.querySelector('#kameo'),
-  extensions: [
-    StarterKit,
-    FormKit,
-    SlashCommand.configure({ suggestion }),
-    Placeholder.configure({ placeholder: 'Press / for commands...' }),
-  ],
-  documentMode: 'edit',
-});
+const createDemoForm = (kameo) => {
+  const pos = kameo.state.doc.content.size;
+  kameo
+    .chain()
+    .insertContentAt(pos, '<h1>The form editor that thinks ahead</h1><p>Build forms like <b>documents</b></p>')
+    .insertFormInputName(pos)
+    .insertFormInputEmail(pos)
+    .insertFormTextarea(pos, { resize: 'none' })
+    .insertFormRating(pos)
+    .insertFormSubmit(pos)
+    .run();
+};
 
-window.kameo = kameo;
+const init = () => {
+  const kameo = initKameo();
+  globalThis.kameo = kameo;
+
+  createDemoForm(kameo);
+};
+
+init();
 </script>
 
-<div id="kameo" class="kameo-container"></div>
+<div id="kameo" class="km-kameo-container"></div>
 
 <style is:global>
-  .kameo-container {
+  .km-kameo-container {
     width: 100%;
     border: 1px solid rgb(229 231 235);
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
   }
 
-  .kameo-container .kameo {
+  .km-kameo-container .kameo {
+    color: #000;
     padding: 32px 200px;
   }
 
+  .km-kameo-container .kameo h1 {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
   @media (max-width: 1024px) {
-    .kameo-container .kameo {
+    .km-kameo-container .kameo {
       padding: 32px 100px;
     }
   }
 
   @media (max-width: 768px) {
-    .kameo-container .kameo {
+    .km-kameo-container .kameo {
       padding: 32px 54px;
     }
   }
