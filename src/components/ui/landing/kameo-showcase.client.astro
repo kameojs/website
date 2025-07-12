@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck  
+
 import '@awesome.me/webawesome/dist/styles/themes/default.css';
 import '@kameo/core/style/theme.css';
 import '@kameo/core/webawesome.js';
@@ -28,12 +30,41 @@ const createDemoForm = (kameo) => {
   kameo
     .chain()
     .insertContentAt(pos, '<h1>The form editor that thinks ahead</h1><p>Build forms like <b>documents</b></p>')
-    .insertFormInputName(pos)
-    .insertFormInputEmail(pos)
-    .insertFormTextarea(pos, { resize: 'none' })
+    .insertFormInputName(pos, { required: true })
+    .insertFormInputEmail(pos, { required: true })
+    .insertFormTextarea(pos, { required: true, resize: 'none' })
     .insertFormRating(pos)
     .insertFormSubmit(pos)
     .run();
+};
+
+const attachEventListeners = (kameo) => {
+  kameo.on('submit', async (event) => {    
+    if (!event.valid) {
+      event.setSubmitResult({
+        success: false,
+        message: 'The form is invalid',
+      });
+      return;
+    }
+
+    // Submit the form and set result.
+    await new Promise((resolve) => setTimeout(resolve, 2500));
+    event.setSubmitResult({
+      success: true,
+      message: 'Form sent',
+    });
+  });
+
+  kameo.on('submitted', (event) => {
+    if (!event.success) return;
+
+    // Exclude nodes.
+    const data = Object.fromEntries(
+      Object.entries(event.formData).map(([_key, data]) => [data.name, data.value])
+    );
+    window.alert(`${event.message} \n ${JSON.stringify(data)}`);
+  });
 };
 
 const init = () => {
@@ -41,6 +72,7 @@ const init = () => {
   globalThis.kameo = kameo;
 
   createDemoForm(kameo);
+  attachEventListeners(kameo);
 };
 
 init();
