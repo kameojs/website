@@ -1,0 +1,17 @@
+:root {
+  --km-font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --km-container-width: 1280px;
+  --km-content-width: 1152px;
+  --km-main-color: #111827;
+  --km-text-color: #4b5563;
+}
+
+.site-title * {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.social-icons a {
+  color: #374151;
+}

@@ -1,0 +1,32 @@
+---
+import HeroSection from './hero-section.astro';
+import KameoShowcase from './kameo-showcase.astro';
+import FeaturesSection from './features-section.astro';
+import Footer from './footer.astro';
+---
+
+<div class="km-landing" data-landing>
+  <div class="km-landing__container">
+    <HeroSection />
+    <KameoShowcase />
+    <FeaturesSection />
+  </div>
+</div>
+<Footer />
+
+<style>
+  .km-landing {
+    width: 100%;
+  }
+
+  .km-landing__container {
+    max-width: var(--km-container-width);
+    margin: 0 auto;
+  }
+</style>
+
+<style is:global>
+  .sl-container:has(> div[data-landing]) {
+    min-width: 100%;
+  }
+</style>

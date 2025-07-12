@@ -1,0 +1,129 @@
+---
+import HiddenLink from './hidden-link.astro';
+
+const linkGroups = [
+  {
+    label: 'Learn',
+    links: [
+      {
+        label: 'Documentation',
+        link: '#',
+      }, 
+      {
+        label: 'Examples',
+        link: '#',
+      }, 
+    ],
+  },
+  {
+    label: 'Resources',
+    links: [
+      {
+       label: 'Contributing',
+       link: 'https://github.com/kameojs/kameo/blob/main/CONTRIBUTING.md',
+      }, 
+      {
+        label: 'MIT License',
+        link: 'https://github.com/kameojs/kameo/blob/main/LICENSE',
+      }
+    ],
+  },
+  {
+    label: 'Community',
+    links: [
+      {
+        label: 'GitHub',
+        link: 'https://github.com/kameojs/kameo',
+      }
+    ],
+  },
+];
+---
+
+<footer class="km-footer">
+  <div class="km-footer__container">
+    {
+      linkGroups.map(group => (
+        <div class="km-footer__group">
+          <h3 class="km-footer__label">
+            {group.label}
+          </h3>
+          <ul class="km-footer__list">
+            {
+              group.links.map(link => (
+                <li>
+                  <HiddenLink href={link.link}>{link.label}</HiddenLink>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="km-footer-copyright">
+    <p class="km-footer-copyright__text">
+      © {new Date().getFullYear()} Kameo
+    </p>
+  </div>
+</footer>
+
+<style>
+  .km-footer {
+    font-family: var(--km-font-family);
+    padding-top: 40px;
+    margin-top: 60px;
+    margin-left: calc(var(--sl-content-pad-x) * -1);
+    margin-right: calc(var(--sl-content-pad-x) * -1);
+    border-top: 1px solid rgb(229 231 235);
+  }
+
+  .km-footer__container {
+    --width: 896px;
+
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: var(--width);
+    padding: 20px 32px;
+    margin: 0 auto;
+  }
+
+  .km-footer__group {
+    min-width: 130px;
+    padding: 20px 8px;
+  }
+
+  .km-footer__label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--km-main-color);
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .km-footer__list {
+    font-size: 14px;
+    line-height: 1.2;
+    display: grid;
+    gap: 16px;
+    padding: 0;
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  .km-footer-copyright {
+    text-align: center;
+    padding-top: 80px;
+    margin-top: 20px;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .km-footer-copyright__text {
+    font-size: 14px;
+    color: var(--km-text-color);
+    line-height: 1.2;
+  }
+</style>

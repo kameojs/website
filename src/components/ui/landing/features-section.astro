@@ -1,0 +1,62 @@
+---
+import FeatureCard from './feature-card.astro';
+import HiddenLink from './hidden-link.astro';
+---
+
+<section class="features-section">
+  <div class="features-section__container">
+    <div class="features-section__grid">
+      <FeatureCard title="Headless by Design">
+        Giving you complete control over styling and appearance, with zero assumptions about your design choices.
+      </FeatureCard>
+
+      <FeatureCard title="Copy-Paste Components">
+        <HiddenLink href="https://tailwindcss.com/">TailwindCSS</HiddenLink>-powered components you can copy directly into your project and customize freely.
+      </FeatureCard>
+
+      <FeatureCard title="Framework Flexibility">
+        The same core with specialized adapters for React, Vue, Preact, Svelte, and Solid.
+      </FeatureCard>
+
+      <FeatureCard title="Flexible API Design">
+        Carefully crafted API that makes extending and customizing your editor intuitive and powerful.
+      </FeatureCard>
+
+      <FeatureCard title="Collaborative Editing">
+        Seamless integration with <HiddenLink href="https://yjs.dev">Yjs</HiddenLink> or <HiddenLink href="https://loro.dev">Loro</HiddenLink> for real-time collaboration.
+      </FeatureCard>
+
+      <FeatureCard title="Built on ProseMirror">
+        Leverages the battle-tested ProseMirror foundation used by The New York Times and Atlassian.
+      </FeatureCard>
+    </div>
+  </div>
+</section>
+
+
+<style is:global>
+.features-section {
+  max-width: var(--km-content-width);
+  padding: 96px 0;
+  margin: 0 auto;
+  position: relative;
+}
+
+.features-section__grid {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 1024px) {
+  .features-section__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .features-section__grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+</style>

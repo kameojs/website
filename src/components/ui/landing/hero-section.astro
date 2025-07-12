@@ -1,0 +1,59 @@
+---
+import { PAGE_TITLE_ID } from '../constants';
+---
+
+<div class="km-hero-section">
+  <h1 id={PAGE_TITLE_ID} class="km-hero-section__title">
+    Build web forms in rich text
+  </h1>
+
+  <h2 class="km-hero-section__subtitle">
+    Web form editor framework powered by ProseMirror
+  </h2>
+</div>
+
+<style>
+.km-hero-section {
+  font-family: var(--km-font-family);
+  display: flex;
+  flex-direction: column;
+  max-width: var(--km-content-width);
+  padding: 48px 0;
+  margin: 0 auto;
+}
+
+.km-hero-section__title {
+  font-size: 72px;
+  font-weight: 400;
+  color: var(--km-main-color);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.km-hero-section__subtitle {
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--km-text-color);
+  text-wrap: balance;
+  margin-top: 32px;
+}
+
+@media (max-width: 1024px) {
+  .km-hero-section__title {
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .km-hero-section {
+    padding: 32px 0;
+  }
+
+  .km-hero-section__title {
+    font-size: 36px;
+    line-height: 1.2;
+  }
+}
+</style>

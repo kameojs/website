@@ -1,0 +1,21 @@
+---
+import KameoShowcaseClient from './kameo-showcase.client.astro';
+---
+
+<div class="km-kameo-showcase">
+  <KameoShowcaseClient></KameoShowcaseClient>
+</div>
+
+<style>
+  .km-kameo-showcase {
+    max-width: var(--km-content-width);
+    padding: 32px 0;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .km-kameo-showcase {
+      padding: 16px 0;
+    }
+  }
+</style>

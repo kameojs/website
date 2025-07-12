@@ -1,0 +1,18 @@
+---
+const href = Astro.props.href;
+const internal = href.startsWith('/');
+const attrs = internal ? { href } : { href, rel: 'noreferrer', target: '_blank' };
+---
+
+<a {...attrs} class="km-hidden-link"><slot /></a>
+
+<style>
+  .km-hidden-link {
+    color: currentColor;
+    text-decoration: none;
+  }
+
+  .km-hidden-link:hover {
+    text-decoration: underline;
+  }
+</style>

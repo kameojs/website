@@ -1,0 +1,36 @@
+---
+const { title } = Astro.props;
+---
+
+<div class="km-feature-card">
+  <h3 class="km-feature-card__title">{title}</h3>
+  <p class="km-feature-card__text">
+    <slot />
+  </p>
+</div>
+
+<style>
+.km-feature-card {
+  font-family: var(--km-font-family);
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  background-color: #fff;
+  position: relative;
+  border: 1px solid rgb(229 231 235);
+  border-radius: 16px;
+}
+
+.km-feature-card__title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--km-main-color);
+  margin-bottom: 12px;
+}
+
+.km-feature-card__text {
+  color: var(--km-text-color);
+  margin-bottom: 16px;
+}
+</style>
