@@ -12,12 +12,12 @@
   "dependencies": {
     "@astrojs/starlight": "^0.34.5",
     "@awesome.me/webawesome": "^3.0.0-beta.2",
-    "@kameo/core": "^0.0.31",
-    "@kameo/extension-slash-command": "^0.0.31",
-    "@kameo/extensions": "^0.0.31",
-    "@kameo/form-kit": "^0.0.31",
-    "@kameo/pm": "^0.0.31",
-    "@kameo/starter-kit": "^0.0.31",
+    "@kameo/core": "^0.0.32",
+    "@kameo/extension-slash-command": "^0.0.32",
+    "@kameo/extensions": "^0.0.32",
+    "@kameo/form-kit": "^0.0.32",
+    "@kameo/pm": "^0.0.32",
+    "@kameo/starter-kit": "^0.0.32",
     "astro": "^5.6.1",
     "sharp": "^0.34.2"
   }
