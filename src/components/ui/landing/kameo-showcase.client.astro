@@ -58,7 +58,7 @@ const handlenKameoEvents = (kameo) => {
     });
   });
 
-  kameo.on('submitted', (event) => {
+  kameo.on('submit:result', (event) => {
     if (!event.success) return;
 
     // Exclude nodes.
