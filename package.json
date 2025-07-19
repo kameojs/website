@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.34.5",
-    "@awesome.me/webawesome": "^3.0.0-beta.2",
-    "@kameo/core": "^0.0.32",
-    "@kameo/extension-slash-command": "^0.0.32",
-    "@kameo/extensions": "^0.0.32",
-    "@kameo/form-kit": "^0.0.32",
-    "@kameo/pm": "^0.0.32",
-    "@kameo/starter-kit": "^0.0.32",
+    "@awesome.me/webawesome": "^3.0.0-beta.3",
+    "@kameo/core": "^0.0.33",
+    "@kameo/extension-slash-command": "^0.0.33",
+    "@kameo/extensions": "^0.0.33",
+    "@kameo/form-kit": "^0.0.33",
+    "@kameo/pm": "^0.0.33",
+    "@kameo/starter-kit": "^0.0.33",
     "astro": "^5.6.1",
     "sharp": "^0.34.2"
   }
