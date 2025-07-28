@@ -4,4 +4,100 @@ sidebar:
   order: 20
 ---
 
-Work in progress.
+import { CodePackageManagers } from 'starlight-theme-nova/components';
+
+This guide will walk you through the process of setting up your first Kameo editor and viewer. We'll create a basic editor and viewer with some common formatting options.
+
+## Installation
+
+First, you'll need to install the following packages. You can use your preferred package manager:
+
+<CodePackageManagers 
+  packages="@kameo/core @kameo/pm @kameo/starter-kit @kameo/form-kit @kameo/extension-slash-command @kameo/extensions @awesome.me/webawesome" 
+  packageManagers={['npm', 'pnpm', 'yarn']}
+/>
+
+## Add markup
+
+Add the following HTML where you'd like to mount the editor or viewer:
+
+```html
+<div id="kameo" class="kameo-container"></div>
+```
+
+Add minimal styling to your container:
+
+```css
+.kameo-container {
+  width: 100%;
+  max-width: 760px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+}
+```
+
+## A minimal editor
+
+```javascript
+import '@awesome.me/webawesome/dist/styles/themes/default.css';
+import '@kameo/core/style/theme.css';
+import '@kameo/core/webawesome.js';
+
+import { Kameo } from '@kameo/core';
+import { StarterKit } from '@kameo/starter-kit';
+import { FormKit } from '@kameo/form-kit';
+import { SlashCommand, suggestion } from '@kameo/extension-slash-command';
+import { Placeholder } from '@kameo/extensions';
+
+const kameo = new Kameo({
+  element: document.querySelector('#kameo'),
+  extensions: [
+    StarterKit,
+    FormKit,
+    SlashCommand.configure({ suggestion }),
+    Placeholder.configure({ placeholder: 'Press / for commands...' }),
+  ],
+  documentMode: 'edit',
+});
+```
+
+## A minimal viewer
+
+```javascript
+import '@awesome.me/webawesome/dist/styles/themes/default.css';
+import '@kameo/core/style/theme.css';
+import '@kameo/core/webawesome.js';
+
+import { Kameo } from '@kameo/core';
+import { StarterKit } from '@kameo/starter-kit';
+import { FormKit } from '@kameo/form-kit';
+import { SlashCommand, suggestion } from '@kameo/extension-slash-command';
+import { Placeholder } from '@kameo/extensions';
+
+const kameo = new Kameo({
+  element: document.querySelector('#kameo'),
+  extensions: [
+    StarterKit,
+    FormKit,
+  ],
+  content: '', // JSON with your form 
+  documentMode: 'view',
+});
+
+kameo.on('submit', (event) => {
+  console.log(`on 'submit' event`, { event });
+
+  event.setSubmitResult({
+    success: true,
+    message: 'Form is submitted',
+  });
+});
+
+kameo.on('submit:result', (event) => {
+  console.log(`on 'submit:result' event`, { event });
+});
+```
+
+You can also combine the editor and viewer into one component and switch the mode using `kameo.setDocumentMode('view')`. The submit functionality only works in `view` mode.
+
+Congratulations! You've successfully created your first Kameo editor and viewer.
