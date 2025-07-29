@@ -71,8 +71,6 @@ import '@kameo/core/webawesome.js';
 import { Kameo } from '@kameo/core';
 import { StarterKit } from '@kameo/starter-kit';
 import { FormKit } from '@kameo/form-kit';
-import { SlashCommand, suggestion } from '@kameo/extension-slash-command';
-import { Placeholder } from '@kameo/extensions';
 
 const kameo = new Kameo({
   element: document.querySelector('#kameo'),
@@ -87,7 +85,7 @@ const kameo = new Kameo({
 kameo.on('submit', (event) => {
   console.log(`on 'submit' event`, { event });
 
-  event.setSubmitResult({
+  event.setResult({
     success: true,
     message: 'Form is submitted',
   });

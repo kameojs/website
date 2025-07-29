@@ -40,10 +40,10 @@ const createDemoForm = (kameo) => {
     .run();
 };
 
-const handlenKameoEvents = (kameo) => {
+const handleKameoEvents = (kameo) => {
   kameo.on('submit', async (event) => {    
     if (!event.valid) {
-      event.setSubmitResult({
+      event.setResult({
         success: false,
         message: 'The form is invalid',
       });
@@ -52,7 +52,7 @@ const handlenKameoEvents = (kameo) => {
 
     // Submit the form and set result.
     await new Promise((resolve) => setTimeout(resolve, 2500));
-    event.setSubmitResult({
+    event.setResult({
       success: true,
       message: 'Form sent',
     });
@@ -85,7 +85,7 @@ const init = () => {
 
   createDemoForm(kameo);
   handleDocumentMode(kameo, documentMode);
-  handlenKameoEvents(kameo);
+  handleKameoEvents(kameo);
 };
 
 init();
