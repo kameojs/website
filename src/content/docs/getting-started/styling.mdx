@@ -1,0 +1,40 @@
+---
+title: Styling Editor
+sidebar:
+  order: 30
+---
+
+This guide will walk you through the various ways to style your Kameo editor.
+
+## Web Awesome styles
+
+Kameo uses the [Web Awesome](https://webawesome.com/) components library for its core fields and some UI. Import `@awesome.me/webawesome/dist/styles/themes/default.css` in your project to include these styles.
+
+```javascript
+import '@awesome.me/webawesome/dist/styles/themes/default.css';
+```
+
+## Basic Styles
+
+Kameo requires some basic styles to function properly. Import `@kameo/core/style/theme.css` in your project to include these styles. You can override or copy and replace some of these styles.
+
+```javascript
+import '@kameo/core/style/theme.css';
+```
+
+## Container Styles
+
+You can style the container element where you mounted Kameo.
+
+```css
+.kameo-container {
+  width: 100%;
+  max-width: 760px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+}
+```
+
+## Typography Styles
+
+Kameo lets you decide how to style headings, paragraphs, lists, and other elements.
