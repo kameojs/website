@@ -1,0 +1,98 @@
+---
+title: Programmatic Form Editing
+sidebar:
+  order: 40
+---
+
+Kameo provides commands for programmatically creating and editing form fields.
+
+## Creating Form
+
+```javascript
+import { Kameo } from '@kameo/core';
+import { StarterKit } from '@kameo/starter-kit';
+import { FormKit } from '@kameo/form-kit';
+
+const kameo = new Kameo({
+  element: document.querySelector('#kameo'),
+  extensions: [
+    StarterKit,
+    FormKit,
+  ],
+  documentMode: 'view',
+});
+
+const endPos = kameo.state.doc.content.size;
+kameo
+  .chain()
+  .insertFormInputName(endPos, { name: 'name', required: true })
+  .insertFormInputEmail(endPos, { name: 'email', required: true })
+  .insertFormTextarea(endPos, { name: 'info' })
+  .insertFormRating(endPos, { name: 'rating' })
+  .insertFormSubmit(endPos)
+  .run();
+```
+
+This code creates a form with four fields and a submit button. The `name` and `email` input fields are created with the `required` attribute.
+
+You can also use a more general `insertFormElement` command and specify the field type (node type) instead of using a specific command.
+
+```javascript
+const endPos = kameo.state.doc.content.size;
+kameo
+  .chain()
+  .insertFormElement('formInput', endPos, { 
+    type: 'text',
+    name: 'name',
+    label: 'Enter your full name',
+    placeholder: 'Enter full name',
+    required: true, 
+  })
+  .insertFormElement('formInput', endPos, { 
+    type: 'email',
+    name: 'email',
+    label: 'Enter your email',
+    placeholder: 'Enter email',
+    required: true,
+  })
+  .insertFormElement('formTextarea', endPos, { name: 'info' })
+  .insertFormElement('formRating', endPos, { name: 'rating' })
+  .insertFormElement('formSubmit', endPos)
+  .run();
+```
+
+The commands can also be used separately to insert individual fields into a document.
+
+```javascript
+const insertPos = 0; // Position in document.
+kameo.commands.insertFormInputEmail(insertPos, { name: 'email' });
+```
+
+All fields must have a unique `name` and `id` attributes. The `id` is generated automatically when you insert a field, but you can override it if necessary.
+
+## Editing Form
+
+There are many ways to edit and manage fields in a document. This is just one example:
+
+```javascript
+import { kameoHelpers } from '@kameo/core';
+
+const [emailField] = kameoHelpers.findFormFields(
+  (node) => node.attrs.name === 'email', 
+  kameo.state,
+);
+  
+if (emailField) {
+  const { tr } = kameo.state;
+  const { pos, node } = emailField;
+
+  tr.setNodeMarkup(pos, undefined, {
+    ...node.attrs,
+    label: 'Enter your work email', // Update the label.
+  });
+
+  kameo.view.dispatch(tr);
+}
+```
+
+The code finds a field with `email` name and updates the `label` attribute.
