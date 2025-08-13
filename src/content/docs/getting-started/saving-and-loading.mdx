@@ -1,0 +1,79 @@
+---
+title: Saving and Loading Content
+sidebar:
+  order: 50
+---
+
+This guide will show you how to implement content persistence in Kameo editor.
+
+## Working with JSON
+
+JSON is the recommended format for storing Kameo forms because it preserves the exact structure and all attributes of your fields and content.
+
+### Saving Content as JSON
+
+To get your document as JSON, use the `getJSON()` method:
+
+```javascript
+// Get the current document as a JSON object
+const json = kameo.getJSON();
+```
+
+### Loading Content from JSON
+
+To load content from JSON when creating an editor:
+
+```javascript
+const kameo = new Kameo({
+  element: document.querySelector('#kameo'),
+  extensions: [
+    StarterKit,
+    FormKit,
+  ],
+  content: json, // Pass the JSON object
+  documentMode: 'view',
+});
+```
+
+To set content from JSON for the editor:
+
+```javascript
+kameo.commands.setContent(json);
+```
+
+### Detecting Document Changes
+
+To save content when the document changes, use the `update` event:
+
+```javascript
+kameo.on('update', ({ editor }) => {
+  const json = editor.getJSON();
+});
+```
+
+## Working with HTML
+
+HTML is useful when you work with Kameo as a rich text editor. If you are working with form fields or other dynamic content, always use JSON as the default format.
+
+### Saving Content as HTML
+
+To convert your document to HTML:
+
+```javascript
+// Get the current document as an HTML string
+const html = kameo.getHTML();
+```
+
+### Loading Content from HTML
+
+```javascript
+const kameo = new Kameo({
+  element: document.querySelector('#kameo'),
+  extensions: [
+    StarterKit,
+    FormKit,
+  ],
+  content: html, // Pass the HTML string
+  documentMode: 'view',
+});
+```
