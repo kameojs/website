@@ -1,0 +1,89 @@
+---
+title: Form validation
+sidebar:
+  order: 70
+---
+
+Kameo uses the [Constraint Validation API](https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Constraint_validation) with support for custom validator functions that extend native validation through `setCustomValidity` method. If you use required fields or inputs with a specific type in your form, they will be validated automatically.
+
+Validation only works for fields that are [form-associated](https://web.dev/articles/more-capable-form-controls#form-associated_custom_elements) custom elements.
+
+## Handling validation
+
+```javascript
+const kameo = new Kameo({
+  element: document.querySelector('#kameo'),
+  extensions: [
+    StarterKit,
+    FormKit,
+  ],
+  content: json,
+  documentMode: 'view',
+});
+
+kameo.on('submit', (event) => {
+  // Check that the form is valid
+  if (!event.valid) {
+    event.setResult({
+      success: false,
+      message: 'Form is not valid',
+    });
+    return;
+  }
+
+  // Get form data without nodes
+  const formData = Object.fromEntries(
+    Object.entries(event.formData).map(([_key, data]) => [data.name, data.value])
+  );
+
+  event.setResult({
+    success: true,
+    message: 'Form is submitted',
+  });
+});
+
+kameo.on('submit:result', (event) => {
+  if (!event.success) {
+    return;
+  }
+});
+```
+
+## Custom validation
+
+You can provide `customValidator` function that will be called for each form-associated field.
+
+```javascript
+const kameo = new Kameo({
+  element: document.querySelector('#kameo'),
+  extensions: [
+    StarterKit,
+    FormKit,
+  ],
+  content: json,
+  documentMode: 'view',
+  validationOptions: {
+    customValidator: ({ node, element }) => {
+      if (node.type.name === 'formInput') {
+        if (node.attrs.name === 'name' && !node.attrs.value) {
+          return 'Please provide a name';
+        }
+        if (node.attrs.name === 'email' && !node.attrs.value) {
+          return 'Please provide an email';
+        }
+      }
+      return '';
+    },
+  },
+});
+```
+
+
+
+
+
+To validate a form programmatically use `kameo.validate()` method.
+
+```javascript
+kameo.validate(options);
+```
