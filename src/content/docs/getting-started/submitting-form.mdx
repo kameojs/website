@@ -1,0 +1,73 @@
+---
+title: Submitting Form
+sidebar:
+  order: 60
+---
+
+This guide will show you how to handle form submissions.
+
+The submit functionality only works in `view` mode. You can initialize Kameo with `view` mode or switch its mode using `kameo.setDocumentMode('view')` method.
+
+## Handling form submission
+
+```javascript
+const kameo = new Kameo({
+  element: document.querySelector('#kameo'),
+  extensions: [
+    StarterKit,
+    FormKit,
+  ],
+  content: json,
+  documentMode: 'view',
+});
+
+// The event is triggered by clicking on the Submit button
+kameo.on('submit', (event) => {
+  console.log(`on 'submit' event`, { event });
+
+  // Get form data without nodes
+  const formData = Object.fromEntries(
+    Object.entries(event.formData).map(([_key, data]) => [data.name, data.value])
+  );
+
+  // Here you can send data to the server or do some asynchronous actions
+
+  // At the end you should call `setResult` method 
+  // and set the `success` property if it was successful or not
+  event.setResult({
+    success: true,
+    message: 'Form is submitted',
+  });
+});
+
+// The event is triggered when you call `setResult` method
+kameo.on('submit:result', (event) => {
+  console.log(`on 'submit:result' event`, { event });
+
+  if (event.success) {
+    // Here you can notify the user about successful submission, hide the form, etc.
+  }
+});
+```
+
+You can also provide callbacks instead of event subscriptions or in addition.
+
+```javascript
+const kameo = new Kameo({
+  element: document.querySelector('#kameo'),
+  extensions: [
+    StarterKit,
+    FormKit,
+  ],
+  content: json,
+  documentMode: 'view',
+  onSubmit: () => {},
+  onSubmitResult: () => {},
+});
+```
+
+To submit a form programmatically use `kameo.submit()` method. This will not process the Submit button.
+
+```javascript
+kameo.submit({ prop: 'custom' });
+```
