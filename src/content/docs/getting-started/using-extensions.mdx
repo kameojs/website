@@ -1,0 +1,39 @@
+---
+title: Using Extensions
+sidebar:
+  order: 80
+---
+
+Extensions allow you to add functionality to Kameo in a modular way, making it easy to build exactly the editing experience you need.
+
+## What are extensions?
+
+Extensions in Kameo are modular pieces of functionality that you can add to your editor. They can provide:
+- **Nodes** (form fields, paragraphs, headings, etc.)
+- **Marks** (bold, italic, underline, etc.)
+- **Commands** (functions that modify the document)
+- **Plugins**
+- **Custom behaviors** and much more
+
+## Basic extension usage
+
+Kameo provides a `StarterKit` that includes the most common rich text features and a `FormKit` for form handling.
+
+```javascript
+import { Kameo } from '@kameo/core';
+import { StarterKit } from '@kameo/starter-kit';
+import { FormKit } from '@kameo/form-kit';
+
+const kameo = new Kameo({
+  element: document.querySelector('#kameo'),
+  extensions: [
+    StarterKit,
+    FormKit,
+  ],
+});
+```
+
+## Related links
+
+- [Extensions](https://tiptap.dev/docs/editor/core-concepts/extensions)
+- [Custom extensions](https://tiptap.dev/docs/editor/extensions/custom-extensions)
