@@ -5,11 +5,12 @@ import '@awesome.me/webawesome/dist/styles/themes/default.css';
 import '@kameo/core/style/theme.css';
 import '@kameo/core/webawesome.js';
 
-import { Kameo } from '@kameo/core';
+import { Kameo, kameoHelpers } from '@kameo/core';
 import { StarterKit } from '@kameo/starter-kit';
 import { FormKit } from '@kameo/form-kit';
 import { SlashCommand, suggestion } from '@kameo/extension-slash-command';
 import { Placeholder } from '@kameo/extensions';
+import { PlaceholderField, placeholderFieldHelpers } from '@kameo/extension-placeholder-field';
 
 const documentMode = 'edit';
 
@@ -19,6 +20,7 @@ const initKameo = () => {
     extensions: [
       StarterKit,
       FormKit,
+      PlaceholderField,
       SlashCommand.configure({ suggestion }),
       Placeholder.configure({ placeholder: 'Press / for commands...' }),
     ],
@@ -31,8 +33,8 @@ const createDemoForm = (kameo) => {
   const pos = kameo.state.doc.content.size;
   kameo
     .chain()
-    .insertContentAt(pos, '<h1>The form editor that thinks ahead</h1><p>Build forms like <b>documents</b></p>')
-    .insertFormInputName(pos, { required: true })
+    .insertContentAt(pos, `<h1>Hello, <span data-placeholder-field data-id="name" data-kind="text" data-name="name" data-label="Your Name" data-color="#7c3aed"></span></h1><p>With Kameo you can build forms like <b>documents</b></p>`)
+    .insertFormInputName(pos, { required: true, })
     .insertFormInputEmail(pos, { required: true })
     .insertFormTextarea(pos, { required: true, resize: 'none' })
     .insertFormRating(pos)
@@ -66,6 +68,13 @@ const handleKameoEvents = (kameo) => {
       Object.entries(event.formData).map(([_key, data]) => [data.name, data.value])
     );
     window.alert(`${event.message} \n ${JSON.stringify(data)}`);
+  });
+
+  kameo.on('update', () => {
+    const [fieldName] = kameoHelpers.findFormFields((node) => node.attrs.name === 'name', kameo.state);
+    if (!fieldName) return;
+    const node = fieldName.node
+    kameo.commands.updatePlaceholderFieldById('name', { value: node.attrs.value });
   });
 };
 
